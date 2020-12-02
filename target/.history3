@@ -1,0 +1,10 @@
+1606933371770:version
+1606933389808:import scala.io.Source\nimport scala.util.matching.Regex\n\n\ncase class Line(low: Int, high: Int, char: Char, password: String)\n\ndef readFile(line: String): Option[Line] = {\n    val info = "^([0-9]+)-([0-9]+) (.): ([^\\\\s]+)$".r\n    line match {\n        case info(low, high, char, password) => Some(Line(low.toIntOption, high.toIntOption, char.lift(0), password))\n        case _ => None\n    }\n}\n\nval inputlines = Source.fromFile("day2in").getLines.toList\n\nval lines = inputlines.flatMap(readFile(_))\n\ndef isValid(line: Line): Boolean = {\n    val count = line.password.count(_ == line.char)\n    (count >= line.low) && (count <= line.high)\n}\n\ndef isValid2(line: Line): Boolean = {\n    (line.password.charAt(line.low -1) == line.char) ^ (line.password.charAt(line.high -1) == line.char)\n}
+1606933401031:import scala.util.matching.Regex
+1606933507372:console
+1606933680580:run Day1
+1606933881974:~run Day2
+1606934179903:reload
+1606934184444:~run
+1606934267288:reload
+1606934272729:~runMain Day2
