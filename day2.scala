@@ -22,7 +22,7 @@ def isValid(line: Line): Boolean = {
 }
 
 def isValid2(line: Line): Boolean = {
-    ((line.password.charAt(line.low -1) == line.char) && (line.password.charAt(line.high -1) != line.char) || (line.password.charAt(line.low -1) != line.char) && (line.password.charAt(line.high -1) == line.char))
+    (line.password.charAt(line.low -1) == line.char) ^ (line.password.charAt(line.high -1) == line.char)
 }
 
 println(Lines.flatten.count(isValid(_)))
