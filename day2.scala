@@ -9,6 +9,13 @@ def isValid(line: String): Boolean = {
     (count >= low.toInt) && (count <= high.toInt)
 }
 
-lines.filter(isValid).length
+def isValid2(line: String): Boolean = {
+    val range :: c :: password :: _ = line.split("[ ]").toList
+    val low :: high :: _ = range.split("-").toList
+    val char = c.charAt(0)
+    ((password.charAt(low.toInt -1) == char) && (password.charAt(high.toInt -1) != char) || (password.charAt(low.toInt -1) != char) && (password.charAt(high.toInt -1) == char))
+}
+
+lines.filter(isValid2).length
 
 
