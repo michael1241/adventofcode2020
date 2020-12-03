@@ -22,8 +22,7 @@ object Day3 extends App {
         val ys: Range = Range(ystep, parsed.length + ystep, ystep)
         val xs: Range = Range(xstep, ys.length * xstep, xstep)
         val coords = xs zip ys
-        val result = coords filter { case (x, y) => parsed(y)(x % 31) }
-        result.length
+        coords count identity { case (x, y) => parsed(y)(x % 31) }
     }
 
     val directions: List[(Int, Int)] = List((1, 1), (3, 1), (5, 1), (7, 1), (1, 2))
