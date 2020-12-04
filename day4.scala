@@ -1,15 +1,15 @@
 import scala.io.Source
-import scala.util.matching.Regex
 
 object Day4 extends App {
-    def validate(result: Option[List[String]]): Boolean = {
-        true
+    def parseLine(l: String): Map[String, String] =
+        l.split(' ').map(_ split ':').collect { case Array(k, v) => (k, v) }.toMap
+
+    def valid(line: Map[String, String]): Boolean = {
+        val keys: Set[String] = Set("byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid")
+        (keys.subsetOf(line.keySet))
     }
+
     val data: Array[String] = Source.fromFile("day4in").mkString.split("\\n\\n").map(_.replace("\n"," "))
-    val reg: Regex = "(?=.*byr:)(?=.*iyr:)(?=.*eyr:)(?=.*hgt:)(?=.*hcl:)(?=.*ecl:)(?=.*pid:)".r.unanchored
-    val reg2: Regex = "(?=.*byr:([^ ]*))(?=.*iyr:([^ ]*))(?=.*eyr:([^ ]*))(?=.*hgt:([^ ]*))(?=.*hcl:([^ ]*))(?=.*ecl:([^ ]*))(?=.*pid:([^ ]*))".r.unanchored
-    println( data count {
-        case reg() => true
-        case _ => false}
-    )
+    val parsed: Array[Map[String, String]] = data map parseLine
+    println(parsed count valid)
 }
