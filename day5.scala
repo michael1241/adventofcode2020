@@ -4,13 +4,15 @@ import java.lang.Integer
 
 object Day5 extends App {
     def convert(ticket: String): Int = {
-        def letterToDigit(letter: Char): Char = {
+        def letterToDigit(letter: Char): Option[Char] = {
             letter match {
-                case 'F'|'L' => '0'
-                case 'B'|'R' => '1'
+                case 'F'|'L' => Some('0')
+                case 'B'|'R' => Some('1')
+                case _ => None
             }
         }
-    Integer.parseInt((ticket map letterToDigit), 2)
+    val binary = (ticket map letterToDigit).flatten.mkString
+    Integer.parseInt(binary, 2)
     }
 
     val input: List[String] = Source.fromFile("day5in").getLines.toList
