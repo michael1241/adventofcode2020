@@ -9,14 +9,14 @@ object Day4 extends App {
 
     def makePerson(l: Map[String, String]): Option[Person] = {
         for {
-            byr <- l("byr").toIntOption
-            iyr <- l("iyr").toIntOption
-            eyr <- l("eyr").toIntOption
-            hgt <- l("hgt")
-            hcl <- l("hcl")
-            ecl <- l("ecl")
-            pid <- l("pid").toIntOption
-        } yield Some(Person(byr, iyr, eyr, hgt, hcl, ecl, pid))
+            byr <- l.get("byr").flatMap(_.toIntOption)
+            iyr <- l.get("iyr").flatMap(_.toIntOption)
+            eyr <- l.get("eyr").flatMap(_.toIntOption)
+            hgt <- l.get("hgt")
+            hcl <- l.get("hcl")
+            ecl <- l.get("ecl")
+            pid <- l.get("pid").flatMap(_.toIntOption)
+        } yield Person(byr, iyr, eyr, hgt, hcl, ecl, pid)
     }
 
     def validateFields(l: Map[String, String]): Option[Person] = {
