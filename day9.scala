@@ -14,22 +14,21 @@ object Day9 extends App {
     val data: List[Int] = Source.fromFile("day9in").mkString.split("\\n").flatMap(_.toIntOption).toList
 
     def part1(data: List[Int]): Int = {
-        twoSum(data.take(25), data.lift(25).getOrElse(0)) match {
-            case true  => part1(data.drop(1))
-            case false => data(25)
-        }
+        if (twoSum(data.take(25), data.lift(25).getOrElse(0)))
+            part1(data.drop(1))
+        else data.lift(25).getOrElse(0)
     }
     //println(part1(data))
     val weakness: Int = 14360655
 
-    def contigSum(nums: List[Int], target: Int): Int = {
+    def contigSum(nums: List[Int], target: Int): IndexedSeq[Int] = {
         for {
             front <- 0 to nums.length
             back <- 0 to nums.length
             if front < back
             val section: List[Int] = nums.slice(front, back)
             if section.sum == target
-        } yield (section.head + section.last)
+        } yield (section.min + section.max)
     }
     println(contigSum(data, weakness))
 }
