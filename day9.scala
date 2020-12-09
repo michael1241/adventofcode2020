@@ -7,7 +7,7 @@ object Day9 extends App {
             (v1, i1) <- nums.zipWithIndex
             (v2, i2) <- nums.zipWithIndex
             if i1 < i2
-            if List(v1, v2).sum == target
+            if v1 + v2 == target
             } yield true
         }.headOption.getOrElse(false)
     
@@ -24,8 +24,7 @@ object Day9 extends App {
     def contigSum(nums: List[Int], target: Int): IndexedSeq[Int] = {
         for {
             front <- 0 to nums.length
-            back <- 0 to nums.length
-            if front < back
+            back <- front to nums.length
             val section: List[Int] = nums.slice(front, back)
             if section.sum == target
         } yield (section.min + section.max)
