@@ -1,7 +1,7 @@
 import scala.io.Source
 
 object Day10 extends App {
-    val data: List[Int] = Source.fromFile("day10in").mkString.split("\\n").toList.flatMap(_.toIntOption).sorted
+    val data: List[Int] = 0 +: Source.fromFile("day10in").mkString.split("\\n").toList.flatMap(_.toIntOption).sorted
 
     def getDiffs(l: List[Int], output: List[Int]): List[Int] = {
         l match {
