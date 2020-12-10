@@ -12,5 +12,5 @@ object Day10 extends App {
     }
 
     val result = getDiffs(data, Nil)
-    println((result.count(_ == 1)+1) * result.count(_ == 3))
+    println(result.count(_ == 1) * result.count(_ == 3))
 }

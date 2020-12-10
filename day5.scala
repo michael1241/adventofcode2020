@@ -11,7 +11,7 @@ object Day5 extends App {
                 case _ => None
             }
         }
-    val binary = (ticket map letterToDigit).flatten.mkString
+    val binary = (ticket.flatMap(letterToDigit)).mkString
     Integer.parseInt(binary, 2)
     }
 
