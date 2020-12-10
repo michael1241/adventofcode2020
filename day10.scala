@@ -5,7 +5,8 @@ object Day10 extends App {
 
     def getDiffs(l: List[Int], output: List[Int]): List[Int] = {
         data match {
-            case a :: b :: rest => getDiffs(l.drop(1), output :+ (b-a))
+            case a :: b :: Nil => output
+            case a :: b :: rest => getDiffs(b :: rest, output :+ (b-a))
             case _ => output
         }
     }
