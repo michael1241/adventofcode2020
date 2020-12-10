@@ -4,12 +4,13 @@ object Day10 extends App {
     val data: List[Int] = Source.fromFile("day10in").mkString.split("\\n").toList.flatMap(_.toIntOption).sorted
 
     def getDiffs(l: List[Int], output: List[Int]): List[Int] = {
-        data match {
-            case a :: b :: Nil => output
+        l match {
+            case a :: b :: Nil => output :+ (b-a)
             case a :: b :: rest => getDiffs(b :: rest, output :+ (b-a))
             case _ => output
         }
     }
 
-    println(getDiffs(data, Nil))
+    val result = getDiffs(data, Nil)
+    println((result.count(_ == 1)+1) * result.count(_ == 3))
 }
