@@ -14,20 +14,19 @@ object Day11 extends App {
     val data: Vector[Vector[String]] = Source.fromFile("day11in").mkString.split("\\n").toVector.map(_.split("").toVector)
 
     val seats: Set[Seat] = { for {
-            y <- 0 to data.length - 1
-            x <- 0 to data(0).length - 1
-        } yield validate(x, y, data(y)(x))
+            (y, yind) <- data.zipWithIndex
+            (seat, xind) <- y.zipWithIndex
+        } yield validate(xind, yind, seat)
     }.flatten.toSet
 
-    def countNeighbors(current: Seat, seats: Set[Seat]): Int = {
-        seats filter {
+    def countNeighbors(current: Seat, seats: Set[Seat]): Int =
+        seats count {
             seat: Seat =>
                 seat != current &&
                 math.abs(seat.x - current.x) <= 1 &&
                 math.abs(seat.y - current.y) <= 1 &&
                 seat.occupied
         }
-    }.size
 
     def nextSeat(seat: Seat, seats: Set[Seat]): Seat = {
         val neighbors: Int = countNeighbors(seat, seats)
@@ -36,11 +35,14 @@ object Day11 extends App {
         else seat
     }
 
-    while (true) {
-        val newSeats: Set[Seat] = seats.map(nextSeat(_, seats))
-        if (newSeats.count(_.occupied) != seats.count(_.occupied))
+    def compute(seats: Set[Seat]): Int = {
+        val newSeats = seats.map(nextSeat(_, seats))
+        if (seats.count(_.occupied) == newSeats.count(_.occupied))
+            return newSeats.count(_.occupied)
+        else
             println(newSeats.count(_.occupied))
-        val seats: Set[Seat] = newSeats
+            compute(newSeats)
     }
 
+    println(compute(seats))
 }
