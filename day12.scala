@@ -39,19 +39,19 @@ object Day12 extends App {
         }
     }
 
-    def setDirs(data: List[Instruction], dir: String, output: List[Instruction]): List[Instruction] = {
+    def setDirs(data: Vector[Instruction], dir: String, output: Vector[Instruction]): Vector[Instruction] = {
         data match {
-            case head :: Nil =>
+            case head +: Nil =>
                 val updated: Instruction = dirConvert(head, dir)
                 output :+ updated
-            case head :: rest =>
+            case head +: rest =>
                 val updated: Instruction = dirConvert(head, dir)
                 setDirs(rest, updated.dir, output :+ updated)
-            case _ => Nil
+            case _ => Vector()
         }
     }
 
-    val data: List[Instruction] = Source.fromFile("day12in").mkString.split("\\n").toList.flatMap(parse)
-    val directioned: List[Instruction] = setDirs(data, data(0).dir, List[Instruction]())
-    println(directioned.map(move(_)).foldLeft(0, 0)((a, b) => (a._1 + b._1, a._2 + b._2)))
+    val data: Vector[Instruction] = Source.fromFile("day12in").mkString.split("\\n").toVector.flatMap(parse)
+    val directioned: Vector[Instruction] = setDirs(data, data(0).dir, Vector[Instruction]())
+    println(directioned.map(move(_)).foldLeft(0, 0)( { case ((a1, b1), (a2, b2)) => (a1 + a2, b1 + b2) } ))
 }
